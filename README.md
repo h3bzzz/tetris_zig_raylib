@@ -20,6 +20,10 @@ The implementation covers the core mechanics expected of a competent Tetris vari
 - **Responsive layout**: The playfield and UI scale dynamically to fit the window dimensions while maintaining square cells.
 
 ---
+<p align="center">
+  <img src="assets/tetris.gif" width="800">
+</p>
+
 
 ## Controls
 
