@@ -63,24 +63,9 @@ Drawing is decoupled from updating. `drawGame` selects the appropriate screen ba
 
 ---
 
-## On Using Raylib with Zig
+## Using Raylib with Zig
 
-Raylib is a straightforward choice for this project. It is a self-contained, header-only-ish C library with no external runtime dependencies, which aligns well with Zig's philosophy of explicit, minimal tooling. The [raylib-zig](https://github.com/raylib-zig/raylib-zig) bindings provide idiomatic Zig wrappers over the C API without adding abstraction overhead.
-
-### What works well
-
-- **Build integration**: Zig's package manager (`build.zig.zon`) fetches the raylib-zig dependency directly from Git. The `build.zig` script links the raylib artifact and exposes the `raylib` and `raygui` modules to the executable with minimal boilerplate.
-- **Cross-compilation**: Zig's toolchain can target Windows, Linux, macOS, and WebAssembly (via Emscripten) from a single build file. Raylib's platform abstraction layers (GLFW, SDL, native) are compiled automatically by the binding's build script.
-- **C interop**: Calling raylib functions from Zig is seamless. The `rl.Color` struct maps directly to raylib's `Color`, and Zig's `@import("raylib")` exposes constants like keyboard enum values (`rl.KeyboardKey.enter`, `.left`, `.right`) without manual binding maintenance.
-- **Immediate mode rendering**: The draw-every-frame approach fits Zig's lack of hidden memory allocation. There are no retained scene graphs or garbage collection concerns; you call `rl.drawRectangleV` and move on.
-
-### Practical considerations
-
-- **String formatting**: raylib expects null-terminated C strings for `rl.drawText`. The codebase uses `std.fmt.bufPrintZ` into fixed-size stack buffers (`[64]u8`) to format dynamic integers for the HUD. This is safe here because score and line counts are bounded, but in a larger project you would centralize string formatting to avoid buffer-size fragility.
-- **Type casting**: Raylib uses `int` and `float` pervasively. Zig requires explicit casts (`@intCast`, `@floatFromInt`, `@intFromFloat`), which adds verbosity but eliminates width-mismatch bugs at compile time. The `Layout` struct pre-computes `f32` positions to minimize repeated casting in the render loop.
-- **No ECS, no frameworks**: This project intentionally avoids entity-component-system overhead or a heavy game framework. The state is plain old data, and the logic is procedural. For a game of this scope, that is the correct trade-off.
-
----
+Raylib is a straightforward choice with the hype around it's simplicity. Raylib will give anyone trying to attempt bare-bone game-development coding a really solid foundation. I had a lot of fun just getting shapes to draw and move on the screen and introduce collision functions, this eventually led me to creating a tetris game. Something easy, that everyone has done just to get acquainted more with Zig and Raylib.
 
 ## Building and Running
 
