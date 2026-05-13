@@ -39,34 +39,6 @@ The implementation covers the core mechanics expected of a competent Tetris vari
 
 ---
 
-## Architecture
-
-### Game Logic
-
-The game state is managed through a set of tightly scoped global variables in `src/main.zig`:
-
-- **`grid[12][20]`**: A 2D array of `GridSquare` enum tags (`empty`, `moving`, `full`, `block`, `fading`).
-- **`color_grid` / `shadow_grid`**: Parallel arrays storing the RGB values and darkened border tones for locked cells.
-- **`piece[4][4]` / `incoming_piece[4][4]`**: Local 4x4 buffers representing the active and next piece matrices.
-- **Counters**: Frame-based counters govern lateral movement, rotation, gravity, fast-fall, line fade, and lock delay, all tuned to a 60 FPS target.
-
-The update loop is partitioned into discrete phases:
-
-1. **Input handling** — keyboard events trigger immediate state changes (rotation, hard drop, pause).
-2. **Gravity and collision detection** — `checkDetection` scans the grid bottom-up to flag when a moving piece contacts a `full` cell or bottom boundary.
-3. **Movement resolution** — `resolveFallingMovement` either advances the piece one row or locks it in place, converting `moving` tags to `full`.
-4. **Line completion check** — `checkCompletion` marks full rows as `fading`.
-5. **Line deletion** — after a brief fade timer, `deleteCompleteLines` removes completed rows and shifts the stack downward, preserving color data.
-6. **Game over detection** — if any `full` cell exists in the top two rows, the game ends.
-
-### Rendering
-
-Drawing is decoupled from updating. `drawGame` selects the appropriate screen based on state, while `drawMainGame` iterates the grid once per frame, switching on `GridSquare` to dispatch filled cells, outlines, moving pieces, blocks, or fading animations. The side panel renders the incoming piece preview and HUD statistics (lines, level, score).
-
-`computeLayout` dynamically calculates cell size, grid origin, and font scaling based on current window dimensions, ensuring the game remains playable at any reasonable resolution.
-
----
-
 ## Using Raylib with Zig
 
 Raylib is a straightforward choice with the hype around it's simplicity. Raylib will give anyone trying to attempt bare-bone game-development coding a really solid foundation. I had a lot of fun just getting shapes to draw and move on the screen and introduce collision functions, this eventually led me to creating a tetris game. Something easy, that everyone has done just to get acquainted more with Zig and Raylib.
