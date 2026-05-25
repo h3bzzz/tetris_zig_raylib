@@ -1,7 +1,7 @@
 # Tetris in Zig with Raylib
 h3bzzz
 
-A fully-featured Tetris clone written in [Zig](https://ziglang.org/), rendered with [raylib](https://www.raylib.com/). This project was my first attempt at getting Zig to know the raylib library and see what Zig could really do with the new version 
+A fully-featured Tetris clone written in [Zig](https://ziglang.org/), rendered with [raylib](https://www.raylib.com/). This project was my first attempt at getting to know the raylib library and see what Zig could really do with the new version 
 releases of 0.17.0-dev.
 ---
 
